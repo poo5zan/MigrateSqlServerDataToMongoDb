@@ -144,5 +144,6 @@ namespace MigrateSqlServerDataToMongoDb
                 _loggingService.Write(ex, LogLevel.Error, typeof(Program), true);
             }
         }
+
     }
 }
