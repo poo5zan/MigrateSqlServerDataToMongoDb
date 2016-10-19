@@ -16,7 +16,7 @@ namespace MigrateSqlServerDataToMongoDb
     {
         private PatternLayout _layout = new PatternLayout();
         private const string LogPattern = "%d %c -- %m%n";
-        private static string DefaultFilePath = @"C:\mylogs\MigrateUdhData";
+        private static string DefaultFilePath = @"C:\mylogs\MigrateSqlServerData";
         private static List<string> _defaultDotnetTypes;
 
         public string LogPath { get; set; }
@@ -109,7 +109,7 @@ namespace MigrateSqlServerDataToMongoDb
             bool writeAllObjectProperties = false,
             Exception exception = null)
         {
-           // Debug.WriteLine("Write - Start");
+          
             Task.Factory.StartNew(() =>
             {
                 ILog log = Create(type);
@@ -131,7 +131,7 @@ namespace MigrateSqlServerDataToMongoDb
                     message += " ,Object Values:" + stringBuilder.ToString();
                 }
 
-                //Debug.WriteLine("Write - Writing By Log4Net");
+               
                 switch (logLevel)
                 {
                     case LogLevel.Debug:
@@ -157,8 +157,6 @@ namespace MigrateSqlServerDataToMongoDb
                         break;
                 }
             });
-
-           // Debug.WriteLine("Write - End");
 
         }
 

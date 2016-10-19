@@ -18,8 +18,6 @@ namespace MigrateSqlServerDataToMongoDb
         public void Call(
             string url,
             bool isPost,
-            //int timeOut,
-            //string userAgent,
             string data = "",
             Action<string> callBack = null
             )
@@ -38,12 +36,9 @@ namespace MigrateSqlServerDataToMongoDb
         {
             try
             {
-                // _loggingService.Write("Data to Send to Service, data=" + data);
-
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
                 request.Method = isPost ? "POST" : "GET";
                 request.Timeout = -1;
-                //request.UserAgent = userAgent;
                 request.ContentType = "application/json; charset=utf-8";
 
                 if (isPost)

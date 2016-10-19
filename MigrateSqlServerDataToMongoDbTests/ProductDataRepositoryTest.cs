@@ -13,7 +13,7 @@ namespace MigrateSqlServerDataToMongoDbTests
         {
 
             //var products = 
-            var prod = new ProductDataRepository().GetProductData(48);
+            //var prod = new ProductDataRepository().GetProductData(48);
 
            // var productsJson = new JsonHelper().ConvertToJson(products);
 

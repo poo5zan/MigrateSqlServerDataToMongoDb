@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdoDotNetHelper.cs" />
-    <Compile Include="CustomFieldDataRepository.cs" />
     <Compile Include="ILoggingService.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="LoggingService.cs" />

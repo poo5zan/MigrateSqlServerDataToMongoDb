@@ -17,7 +17,6 @@ namespace MigrateSqlServerDataToMongoDb
 
         static void Main(string[] args)
         {
-            //Console.WriteLine("Start");
             _loggingService = new LoggingService();
             _productDataRepository = new ProductDataRepository();
             _restServiceHelper = new RestServiceHelper();
@@ -25,22 +24,15 @@ namespace MigrateSqlServerDataToMongoDb
 
             _loggingService.Write("Started Application ",
                 LogLevel.Info, typeof(Program));
-            //var stopWatch = new Stopwatch();
-            //stopWatch.Start();
-
+           
             // Get Stores
             var stores = new StoreRepository().GetStores();
-            //Console.WriteLine("Time Elapsed to fetch Stores " + stopWatch.Elapsed.TotalMinutes);
-            //_loggingService.Write("Time Elapsed to fetch Stores " + stopWatch.Elapsed.TotalMinutes);
             if (stores == null)
             {
                 Console.WriteLine("No stores");
             }
             else
             {
-                // Console.WriteLine("Total Stored Found " + stores.Count);
-
-
                 foreach (var store in stores)
                 {
                     Task.Factory.StartNew(() =>
@@ -49,7 +41,6 @@ namespace MigrateSqlServerDataToMongoDb
                        try
                        {
                            var productToDump = new List<Dictionary<string, object>>();
-                           //Console.WriteLine("Getting product data for Store = " + store.StoreId);
                            _loggingService.Write("Getting product data for Store = " + storeModel.StoreId,
                                LogLevel.Info, typeof(Program));
                            var products = _productDataRepository.GetProducts(storeModel.StoreId);
@@ -57,17 +48,10 @@ namespace MigrateSqlServerDataToMongoDb
                            foreach (var product in products)
                            {
                                _productCount++;
-                               //Console.WriteLine("Received prouct count=" + _productCount + ",store=" + storeModel.StoreId);
-                               _loggingService.Write("Received product ,Count=" + _productCount + ",store=" + storeModel.StoreId);// + ", StoreId=" + storeModel.StoreId);
-                                                                                                                                  //add store data along with product data
-                                                                                                                                  //product.Add("storeId", storeModel.StoreId);
-                                                                                                                                  //product.Add("storeIdentifier", storeModel.StoreIdentifier);
-                                                                                                                                  //product.Add("storeName", storeModel.Name);
-                                                                                                                                  //product.Add("storeClientId", storeModel.ClientId);
+                               _loggingService.Write("Received product ,Count=" + _productCount + ",store=" + storeModel.StoreId);
 
                                productToDump.Add(product);
-
-                               //_loggingService.Write("ProductToDump Count=");
+                               
                                if (productToDump.Count == 50)
                                {
                                    _loggingService.Write("Writing 50 product to MongoDb",
@@ -93,16 +77,12 @@ namespace MigrateSqlServerDataToMongoDb
                        {
                            _loggingService.Write(e, LogLevel.Error,
                                  typeof(Program), true);
-                           //throw;
                        }
                    });
                 }
 
             }
-
-            //_loggingService.Write("Completed Time Elapsed " + stopWatch.Elapsed.TotalMinutes,
-            //    LogLevel.Info, typeof(Program));
-            //stopWatch.Stop();
+            
             Console.WriteLine("Running process in background   ");
             Console.ReadLine();
 
@@ -113,8 +93,6 @@ namespace MigrateSqlServerDataToMongoDb
         {
             try
             {
-                // Task.Factory.StartNew(() =>
-                // {
                 _loggingService.Write("Converting product data to Json. DataCount=" + data.Count,
                 LogLevel.Info, typeof(Program));
                 try
@@ -134,16 +112,13 @@ namespace MigrateSqlServerDataToMongoDb
                     InsertDataToDb(dataList1);
                     var dataList2 = data.GetRange(data.Count / 2, data.Count / 2);
                     InsertDataToDb(dataList2);
-                    //throw;
+                  
                 }
-                
-                // });
             }
             catch (Exception ex)
             {
                 _loggingService.Write(ex, LogLevel.Error, typeof(Program), true);
             }
         }
-
     }
 }

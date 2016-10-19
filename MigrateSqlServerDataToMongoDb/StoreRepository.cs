@@ -17,8 +17,7 @@ namespace MigrateSqlServerDataToMongoDb
         public List<StoreModel> GetStores()
         {
             string sql = @"Select Id,StoreIdentifier,Name,ClientId
-                            From pimstore
-                            
+                            From store                            
                             ";
             //Where Id not in (32,48,21,49,39,58)
             var stores = new List<StoreModel>();
@@ -49,7 +48,6 @@ namespace MigrateSqlServerDataToMongoDb
                                 StoreIdentifier = reader["StoreIdentifier"].ToString()
                             });
                         }
-
                     }
                 }
             }
@@ -58,7 +56,6 @@ namespace MigrateSqlServerDataToMongoDb
             {
                 Console.WriteLine(ex.ToString());
                 return null;
-                //throw;
             }
 
             return stores;
